@@ -11,10 +11,10 @@ export default function ProductCard({ product }: { product: Product }) {
     n.toLocaleString("es-AR", { style: "currency", currency: "ARS" });
 
   return (
-    <article className="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col">
-      <div className="relative h-52 bg-gradient-to-br from-amber-50 to-orange-50 overflow-hidden">
+    <article className="group bg-white rounded-2xl overflow-hidden flex flex-col shadow-sm hover:shadow-lg transition-all duration-300 border border-[#E8E2D4]">
+      <div className="relative h-52 bg-[#E8E2D4] overflow-hidden">
         {product.badge && (
-          <span className="absolute top-3 left-3 z-10 bg-orange-500 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow">
+          <span className="absolute top-3 left-3 z-10 bg-[#5E6644] text-[#F4F0E8] text-xs font-bold px-2.5 py-1 rounded-full tracking-wide">
             {product.badge}
           </span>
         )}
@@ -34,25 +34,25 @@ export default function ProductCard({ product }: { product: Product }) {
 
       <div className="flex flex-col flex-1 p-4">
         <div className="flex items-start justify-between gap-2 mb-1">
-          <h3 className="font-bold text-gray-800 text-sm leading-tight">
+          <h3 className="font-black text-[#2C2E22] text-sm leading-tight tracking-wide">
             {product.name}
           </h3>
-          <span className="text-xs text-gray-400 whitespace-nowrap bg-gray-50 px-2 py-0.5 rounded-full">
+          <span className="text-xs text-[#5E6644]/60 whitespace-nowrap bg-[#F4F0E8] px-2 py-0.5 rounded-full border border-[#E8E2D4] flex-shrink-0">
             {product.weight}
           </span>
         </div>
 
-        <p className="text-xs text-gray-500 leading-relaxed flex-1 mt-1">
+        <p className="text-xs text-[#2C2E22]/60 leading-relaxed flex-1 mt-1">
           {product.description}
         </p>
 
         <div className="flex items-center justify-between mt-4">
-          <span className="text-xl font-black text-orange-500">
+          <span className="text-xl font-black text-[#5E6644]">
             {formatPrice(product.price)}
           </span>
           <button
             onClick={() => addItem(product)}
-            className="bg-orange-500 hover:bg-orange-600 active:scale-95 text-white text-sm font-bold px-4 py-2 rounded-xl transition-all shadow-md shadow-orange-200"
+            className="bg-[#5E6644] hover:bg-[#464E30] active:scale-95 text-[#F4F0E8] text-xs font-black px-4 py-2 rounded-xl transition-all tracking-wider uppercase"
           >
             Agregar
           </button>

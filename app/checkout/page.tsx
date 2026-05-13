@@ -34,28 +34,21 @@ export default function CheckoutPage() {
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
+  ) => setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (items.length === 0) return;
-
     setLoading(true);
     setError("");
-
     try {
       const res = await fetch("/api/create-preference", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ items, buyer: form }),
       });
-
       if (!res.ok) throw new Error("Error al crear la preferencia de pago");
-
       const data = await res.json();
-
       if (data.init_point) {
         clearCart();
         window.location.href = data.init_point;
@@ -63,9 +56,7 @@ export default function CheckoutPage() {
         throw new Error("No se recibió el link de pago");
       }
     } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Ocurrió un error inesperado"
-      );
+      setError(err instanceof Error ? err.message : "Ocurrió un error inesperado");
     } finally {
       setLoading(false);
     }
@@ -73,12 +64,12 @@ export default function CheckoutPage() {
 
   if (items.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center flex-1 py-20 gap-4 text-gray-400">
+      <div className="flex flex-col items-center justify-center flex-1 py-20 gap-4 text-[#5E6644]/40">
         <span className="text-6xl">🛒</span>
-        <p className="text-lg">Tu carrito está vacío</p>
+        <p className="text-lg font-semibold">Tu carrito está vacío</p>
         <button
           onClick={() => router.push("/")}
-          className="bg-orange-500 text-white font-bold px-6 py-2.5 rounded-xl mt-2"
+          className="bg-[#5E6644] text-[#F4F0E8] font-black px-6 py-2.5 rounded-xl mt-2 uppercase tracking-wider text-sm hover:bg-[#464E30] transition-colors"
         >
           Ver productos
         </button>
@@ -88,67 +79,33 @@ export default function CheckoutPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-black text-gray-800 mb-8">
-        Finalizar pedido
-      </h1>
+      <div className="mb-8">
+        <p className="text-xs font-bold text-[#5E6644] uppercase tracking-[0.2em] mb-1">
+          Último paso
+        </p>
+        <h1 className="text-3xl font-black text-[#2C2E22]">Finalizar pedido</h1>
+      </div>
 
       <div className="grid md:grid-cols-2 gap-10">
         {/* Formulario */}
         <form onSubmit={handleSubmit} className="space-y-4">
-          <h2 className="text-lg font-bold text-gray-700 border-b pb-2">
+          <h2 className="text-sm font-black text-[#2C2E22] border-b border-[#E8E2D4] pb-2 uppercase tracking-widest">
             Tus datos
           </h2>
 
-          <Field
-            label="Nombre completo"
-            name="name"
-            value={form.name}
-            onChange={handleChange}
-            required
-            placeholder="Juan Pérez"
-          />
-          <Field
-            label="Email"
-            name="email"
-            type="email"
-            value={form.email}
-            onChange={handleChange}
-            required
-            placeholder="juan@ejemplo.com"
-          />
-          <Field
-            label="Teléfono / WhatsApp"
-            name="phone"
-            type="tel"
-            value={form.phone}
-            onChange={handleChange}
-            required
-            placeholder="+54 9 11 2345-6789"
-          />
+          <Field label="Nombre completo" name="name" value={form.name} onChange={handleChange} required placeholder="Juan Pérez" />
+          <Field label="Email" name="email" type="email" value={form.email} onChange={handleChange} required placeholder="juan@ejemplo.com" />
+          <Field label="Teléfono / WhatsApp" name="phone" type="tel" value={form.phone} onChange={handleChange} required placeholder="+54 9 221 000-0000" />
 
-          <h2 className="text-lg font-bold text-gray-700 border-b pb-2 pt-2">
+          <h2 className="text-sm font-black text-[#2C2E22] border-b border-[#E8E2D4] pb-2 pt-2 uppercase tracking-widest">
             Dirección de envío
           </h2>
 
-          <Field
-            label="Dirección"
-            name="address"
-            value={form.address}
-            onChange={handleChange}
-            required
-            placeholder="Av. Corrientes 1234"
-          />
-          <Field
-            label="Ciudad / Localidad"
-            name="city"
-            value={form.city}
-            onChange={handleChange}
-            required
-            placeholder="Buenos Aires"
-          />
+          <Field label="Dirección" name="address" value={form.address} onChange={handleChange} required placeholder="Calle 1 Nro. 234" />
+          <Field label="Ciudad / Localidad" name="city" value={form.city} onChange={handleChange} required placeholder="La Plata" />
 
           <div>
-            <label className="block text-sm font-semibold text-gray-600 mb-1">
+            <label className="block text-xs font-bold text-[#2C2E22]/60 mb-1 uppercase tracking-wider">
               Notas del pedido (opcional)
             </label>
             <textarea
@@ -156,8 +113,8 @@ export default function CheckoutPage() {
               value={form.notes}
               onChange={handleChange}
               rows={3}
-              placeholder="Instrucciones de entrega, preferencias, etc."
-              className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300 resize-none"
+              placeholder="Instrucciones de entrega, preferencias..."
+              className="w-full border border-[#E8E2D4] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#5E6644]/30 resize-none bg-white text-[#2C2E22]"
             />
           </div>
 
@@ -170,69 +127,64 @@ export default function CheckoutPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-orange-500 hover:bg-orange-600 disabled:opacity-60 text-white font-black py-4 rounded-xl text-lg transition-colors shadow-lg shadow-orange-200 mt-4"
+            className="w-full bg-[#5E6644] hover:bg-[#464E30] disabled:opacity-60 text-[#F4F0E8] font-black py-4 rounded-xl transition-colors mt-4 uppercase tracking-widest text-sm"
           >
             {loading ? "Redirigiendo..." : "Pagar con MercadoPago →"}
           </button>
 
-          <p className="text-xs text-center text-gray-400">
+          <p className="text-xs text-center text-[#2C2E22]/40">
             Serás redirigido a MercadoPago para completar el pago de forma segura.
           </p>
         </form>
 
         {/* Resumen */}
         <div>
-          <h2 className="text-lg font-bold text-gray-700 border-b pb-2 mb-4">
+          <h2 className="text-sm font-black text-[#2C2E22] border-b border-[#E8E2D4] pb-2 mb-4 uppercase tracking-widest">
             Tu pedido
           </h2>
           <ul className="space-y-3">
             {items.map((item) => (
-              <li key={item.id} className="flex gap-3 items-center">
-                <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-amber-50 flex-shrink-0">
+              <li key={item.id} className="flex gap-3 items-center bg-white rounded-xl p-3 border border-[#E8E2D4]">
+                <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-[#E8E2D4] flex-shrink-0">
                   <Image
                     src={item.image}
                     alt={item.name}
                     fill
                     className="object-cover"
                     onError={(e) => {
-                      (e.target as HTMLImageElement).src =
-                        "/images/placeholder.png";
+                      (e.target as HTMLImageElement).src = "/images/placeholder.png";
                     }}
                   />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-gray-800 truncate">
-                    {item.name}
-                  </p>
-                  <p className="text-xs text-gray-400">
-                    {item.weight} × {item.quantity}
-                  </p>
+                  <p className="text-sm font-bold text-[#2C2E22] truncate">{item.name}</p>
+                  <p className="text-xs text-[#5E6644]/60">{item.weight} × {item.quantity}</p>
                 </div>
-                <span className="text-sm font-bold text-orange-500 flex-shrink-0">
+                <span className="text-sm font-black text-[#5E6644] flex-shrink-0">
                   {formatPrice(item.price * item.quantity)}
                 </span>
               </li>
             ))}
           </ul>
 
-          <div className="mt-6 pt-4 border-t border-gray-100 space-y-2">
-            <div className="flex justify-between text-sm text-gray-500">
+          <div className="mt-6 pt-4 border-t border-[#E8E2D4] space-y-2">
+            <div className="flex justify-between text-sm text-[#2C2E22]/60">
               <span>Subtotal</span>
               <span>{formatPrice(total())}</span>
             </div>
-            <div className="flex justify-between text-sm text-gray-500">
+            <div className="flex justify-between text-sm text-[#2C2E22]/60">
               <span>Envío</span>
-              <span className="text-green-600 font-medium">A coordinar</span>
+              <span className="text-[#5E6644] font-semibold">A coordinar</span>
             </div>
-            <div className="flex justify-between text-base font-black text-gray-800 pt-2 border-t">
+            <div className="flex justify-between font-black text-[#2C2E22] pt-2 border-t border-[#E8E2D4]">
               <span>Total</span>
-              <span className="text-orange-500">{formatPrice(total())}</span>
+              <span className="text-[#5E6644] text-lg">{formatPrice(total())}</span>
             </div>
           </div>
 
-          <div className="mt-6 bg-amber-50 rounded-2xl p-4 text-xs text-amber-700 space-y-1">
-            <p className="font-semibold">🔒 Pago 100% seguro</p>
-            <p>Tu información está protegida. Procesamos pagos con MercadoPago.</p>
+          <div className="mt-5 bg-[#5E6644]/8 border border-[#5E6644]/15 rounded-2xl p-4 text-xs text-[#5E6644] space-y-1">
+            <p className="font-bold">🔒 Pago 100% seguro</p>
+            <p className="text-[#2C2E22]/50">Procesamos pagos con MercadoPago. Tu información está protegida.</p>
           </div>
         </div>
       </div>
@@ -241,35 +193,21 @@ export default function CheckoutPage() {
 }
 
 function Field({
-  label,
-  name,
-  value,
-  onChange,
-  required,
-  placeholder,
-  type = "text",
+  label, name, value, onChange, required, placeholder, type = "text",
 }: {
-  label: string;
-  name: string;
-  value: string;
+  label: string; name: string; value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  required?: boolean;
-  placeholder?: string;
-  type?: string;
+  required?: boolean; placeholder?: string; type?: string;
 }) {
   return (
     <div>
-      <label className="block text-sm font-semibold text-gray-600 mb-1">
+      <label className="block text-xs font-bold text-[#2C2E22]/60 mb-1 uppercase tracking-wider">
         {label}
       </label>
       <input
-        name={name}
-        type={type}
-        value={value}
-        onChange={onChange}
-        required={required}
-        placeholder={placeholder}
-        className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+        name={name} type={type} value={value} onChange={onChange}
+        required={required} placeholder={placeholder}
+        className="w-full border border-[#E8E2D4] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#5E6644]/30 bg-white text-[#2C2E22] placeholder:text-[#2C2E22]/30"
       />
     </div>
   );
