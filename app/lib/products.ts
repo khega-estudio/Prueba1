@@ -15,7 +15,7 @@ export const products: Product[] = [
     name: "Pasta de Maní Original",
     description:
       "100% maní tostado, sin aditivos ni conservantes. Cremosa, nutritiva y llena de sabor natural.",
-    price: 1800,
+    price: 3700,
     weight: "400g",
     image: "/images/mani-original.png",
     badge: "Más vendido",
@@ -26,7 +26,7 @@ export const products: Product[] = [
     name: "Pasta de Maní y Chocolate",
     description:
       "La combinación perfecta de maní tostado y cacao puro. Ideal para desayunos y meriendas irresistibles.",
-    price: 2100,
+    price: 3700,
     weight: "400g",
     image: "/images/mani-chocolate.png",
     badge: "Favorito",
@@ -37,7 +37,7 @@ export const products: Product[] = [
     name: "Maní, Chocolate y Miel",
     description:
       "Triple combinación ganadora: maní tostado, cacao y miel natural. Dulzura equilibrada en cada cucharada.",
-    price: 2300,
+    price: 3700,
     weight: "400g",
     image: "/images/mani-choco-miel.png",
     category: "pastas",
@@ -47,7 +47,7 @@ export const products: Product[] = [
     name: "Pasta de Maní Salado",
     description:
       "Maní tostado con toque de sal marina. Para los que prefieren el balance entre dulce y salado.",
-    price: 1900,
+    price: 3700,
     weight: "400g",
     image: "/images/mani-salado.png",
     category: "pastas",
@@ -63,14 +63,24 @@ export const products: Product[] = [
     category: "otros",
   },
   {
-    id: "miel",
+    id: "miel-600",
     name: "Miel Natural",
     description:
       "Miel pura de campo, sin procesar. Aroma y sabor intenso, ideal para endulzar naturalmente.",
-    price: 2500,
-    weight: "500g",
+    price: 5000,
+    weight: "600g",
     image: "/images/miel.png",
-    badge: "Nuevo",
+    category: "otros",
+  },
+  {
+    id: "miel-1kg",
+    name: "Miel Natural",
+    description:
+      "Miel pura de campo, sin procesar. Aroma y sabor intenso, ideal para endulzar naturalmente.",
+    price: 7500,
+    weight: "1kg",
+    image: "/images/miel.png",
+    badge: "Mejor precio",
     category: "otros",
   },
   {
