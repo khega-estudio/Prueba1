@@ -1,11 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { useCartStore } from "@/app/store/cartStore";
 import type { Product } from "@/app/lib/products";
 
 export default function ProductCard({ product }: { product: Product }) {
   const addItem = useCartStore((s) => s.addItem);
+  const [selectedIdx, setSelectedIdx] = useState(0);
+
+  const selected = product.variants[selectedIdx];
+  const hasVariants = product.variants.length > 1;
 
   const formatPrice = (n: number) =>
     n.toLocaleString("es-AR", { style: "currency", currency: "ARS" });
@@ -33,25 +38,45 @@ export default function ProductCard({ product }: { product: Product }) {
       </div>
 
       <div className="flex flex-col flex-1 p-4">
-        <div className="flex items-start justify-between gap-2 mb-1">
-          <h3 className="font-black text-[#2C2E22] text-sm leading-tight tracking-wide">
-            {product.name}
-          </h3>
-          <span className="text-xs text-[#5E6644]/60 whitespace-nowrap bg-[#F4F0E8] px-2 py-0.5 rounded-full border border-[#E8E2D4] flex-shrink-0">
-            {product.weight}
-          </span>
-        </div>
+        <h3 className="font-black text-[#2C2E22] text-sm leading-tight tracking-wide mb-1">
+          {product.name}
+        </h3>
 
-        <p className="text-xs text-[#2C2E22]/60 leading-relaxed flex-1 mt-1">
+        <p className="text-xs text-[#2C2E22]/50 leading-relaxed flex-1">
           {product.description}
         </p>
 
-        <div className="flex items-center justify-between mt-4">
+        {/* Selector de gramaje */}
+        {hasVariants ? (
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {product.variants.map((v, i) => (
+              <button
+                key={v.weight}
+                onClick={() => setSelectedIdx(i)}
+                className={`text-xs font-bold px-2.5 py-1 rounded-lg border transition-colors ${
+                  selectedIdx === i
+                    ? "bg-[#5E6644] text-[#F4F0E8] border-[#5E6644]"
+                    : "bg-white text-[#5E6644] border-[#5E6644]/30 hover:border-[#5E6644]"
+                }`}
+              >
+                {v.weight}
+              </button>
+            ))}
+          </div>
+        ) : (
+          <div className="mt-3">
+            <span className="text-xs text-[#5E6644]/60 bg-[#F4F0E8] border border-[#E8E2D4] px-2.5 py-1 rounded-lg font-medium">
+              {selected.weight}
+            </span>
+          </div>
+        )}
+
+        <div className="flex items-center justify-between mt-3">
           <span className="text-xl font-black text-[#5E6644]">
-            {formatPrice(product.price)}
+            {formatPrice(selected.price)}
           </span>
           <button
-            onClick={() => addItem(product)}
+            onClick={() => addItem(product, selected)}
             className="bg-[#5E6644] hover:bg-[#464E30] active:scale-95 text-[#F4F0E8] text-xs font-black px-4 py-2 rounded-xl transition-all tracking-wider uppercase"
           >
             Agregar

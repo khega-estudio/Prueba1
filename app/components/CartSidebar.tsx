@@ -51,9 +51,9 @@ export default function CartSidebar() {
           </div>
         ) : (
           <>
-            <ul className="flex-1 overflow-y-auto p-4 space-y-4">
+            <ul className="flex-1 overflow-y-auto p-4 space-y-3">
               {items.map((item) => (
-                <li key={item.id} className="flex gap-3 bg-white rounded-xl p-3 shadow-sm">
+                <li key={item.cartId} className="flex gap-3 bg-white rounded-xl p-3 shadow-sm border border-[#E8E2D4]">
                   <div className="relative w-14 h-14 rounded-lg overflow-hidden bg-[#E8E2D4] flex-shrink-0">
                     <Image
                       src={item.image}
@@ -69,10 +69,10 @@ export default function CartSidebar() {
                     <p className="text-sm font-bold text-[#2C2E22] leading-tight truncate">
                       {item.name}
                     </p>
-                    <p className="text-xs text-[#5E6644]/60">{item.weight}</p>
+                    <p className="text-xs text-[#5E6644]/60 font-medium">{item.weight}</p>
                     <div className="flex items-center gap-2 mt-1.5">
                       <button
-                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                        onClick={() => updateQuantity(item.cartId, item.quantity - 1)}
                         className="w-6 h-6 rounded-full bg-[#E8E2D4] hover:bg-[#5E6644] hover:text-white text-[#2C2E22] font-bold text-sm flex items-center justify-center transition-colors"
                       >
                         −
@@ -81,7 +81,7 @@ export default function CartSidebar() {
                         {item.quantity}
                       </span>
                       <button
-                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                        onClick={() => updateQuantity(item.cartId, item.quantity + 1)}
                         className="w-6 h-6 rounded-full bg-[#E8E2D4] hover:bg-[#5E6644] hover:text-white text-[#2C2E22] font-bold text-sm flex items-center justify-center transition-colors"
                       >
                         +
@@ -90,7 +90,7 @@ export default function CartSidebar() {
                   </div>
                   <div className="flex flex-col items-end justify-between">
                     <button
-                      onClick={() => removeItem(item.id)}
+                      onClick={() => removeItem(item.cartId)}
                       className="text-[#5E6644]/30 hover:text-red-400 transition-colors"
                     >
                       <TrashIcon className="w-4 h-4" />

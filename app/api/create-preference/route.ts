@@ -14,20 +14,23 @@ export async function POST(req: NextRequest) {
     }
 
     const preference = new Preference(client);
-
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
     const result = await preference.create({
       body: {
-        items: items.map(
-          (item: { id: string; name: string; price: number; quantity: number }) => ({
-            id: item.id,
-            title: item.name,
-            quantity: item.quantity,
-            unit_price: item.price,
-            currency_id: "ARS",
-          })
-        ),
+        items: items.map((item: {
+          cartId: string;
+          name: string;
+          weight: string;
+          price: number;
+          quantity: number;
+        }) => ({
+          id: item.cartId,
+          title: `${item.name} (${item.weight})`,
+          quantity: item.quantity,
+          unit_price: item.price,
+          currency_id: "ARS",
+        })),
         payer: {
           name: buyer.name,
           email: buyer.email,

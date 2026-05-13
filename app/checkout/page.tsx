@@ -89,7 +89,7 @@ export default function CheckoutPage() {
       <div className="grid md:grid-cols-2 gap-10">
         {/* Formulario */}
         <form onSubmit={handleSubmit} className="space-y-4">
-          <h2 className="text-sm font-black text-[#2C2E22] border-b border-[#E8E2D4] pb-2 uppercase tracking-widest">
+          <h2 className="text-xs font-black text-[#2C2E22] border-b border-[#E8E2D4] pb-2 uppercase tracking-widest">
             Tus datos
           </h2>
 
@@ -97,7 +97,7 @@ export default function CheckoutPage() {
           <Field label="Email" name="email" type="email" value={form.email} onChange={handleChange} required placeholder="juan@ejemplo.com" />
           <Field label="Teléfono / WhatsApp" name="phone" type="tel" value={form.phone} onChange={handleChange} required placeholder="+54 9 221 000-0000" />
 
-          <h2 className="text-sm font-black text-[#2C2E22] border-b border-[#E8E2D4] pb-2 pt-2 uppercase tracking-widest">
+          <h2 className="text-xs font-black text-[#2C2E22] border-b border-[#E8E2D4] pb-2 pt-2 uppercase tracking-widest">
             Dirección de envío
           </h2>
 
@@ -114,7 +114,7 @@ export default function CheckoutPage() {
               onChange={handleChange}
               rows={3}
               placeholder="Instrucciones de entrega, preferencias..."
-              className="w-full border border-[#E8E2D4] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#5E6644]/30 resize-none bg-white text-[#2C2E22]"
+              className="w-full border border-[#E8E2D4] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#5E6644]/30 resize-none bg-white text-[#2C2E22] placeholder:text-[#2C2E22]/30"
             />
           </div>
 
@@ -139,12 +139,12 @@ export default function CheckoutPage() {
 
         {/* Resumen */}
         <div>
-          <h2 className="text-sm font-black text-[#2C2E22] border-b border-[#E8E2D4] pb-2 mb-4 uppercase tracking-widest">
+          <h2 className="text-xs font-black text-[#2C2E22] border-b border-[#E8E2D4] pb-2 mb-4 uppercase tracking-widest">
             Tu pedido
           </h2>
           <ul className="space-y-3">
             {items.map((item) => (
-              <li key={item.id} className="flex gap-3 items-center bg-white rounded-xl p-3 border border-[#E8E2D4]">
+              <li key={item.cartId} className="flex gap-3 items-center bg-white rounded-xl p-3 border border-[#E8E2D4]">
                 <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-[#E8E2D4] flex-shrink-0">
                   <Image
                     src={item.image}
@@ -158,7 +158,9 @@ export default function CheckoutPage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-bold text-[#2C2E22] truncate">{item.name}</p>
-                  <p className="text-xs text-[#5E6644]/60">{item.weight} × {item.quantity}</p>
+                  <p className="text-xs text-[#5E6644]/60 font-medium">
+                    {item.weight} × {item.quantity}
+                  </p>
                 </div>
                 <span className="text-sm font-black text-[#5E6644] flex-shrink-0">
                   {formatPrice(item.price * item.quantity)}
@@ -182,8 +184,8 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          <div className="mt-5 bg-[#5E6644]/8 border border-[#5E6644]/15 rounded-2xl p-4 text-xs text-[#5E6644] space-y-1">
-            <p className="font-bold">🔒 Pago 100% seguro</p>
+          <div className="mt-5 bg-[#5E6644]/8 border border-[#5E6644]/15 rounded-2xl p-4 text-xs text-[#5E6644]">
+            <p className="font-bold mb-0.5">🔒 Pago 100% seguro</p>
             <p className="text-[#2C2E22]/50">Procesamos pagos con MercadoPago. Tu información está protegida.</p>
           </div>
         </div>
